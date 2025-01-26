@@ -16,7 +16,7 @@ public class Schedule {
   private LocalDateTime createdAt;  //일정 생성 시간
   private LocalDateTime updatedAt; // 일정 수정 시간
   private String password;//수정하고 삭제할 때 필요한 비밀번호
-
+//생성자
   public Schedule(Long userId, String title, String description, LocalDateTime date, String password){
     this.userId = userId;
     this.title = title;
