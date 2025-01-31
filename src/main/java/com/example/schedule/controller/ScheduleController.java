@@ -4,6 +4,8 @@ import com.example.schedule.dto.ScheduleRequestDto;
 import com.example.schedule.dto.ScheduleResponseDto;
 import com.example.schedule.dto.ScheduleUpdateRequestDto;
 import com.example.schedule.entity.Schedule;
+import com.example.schedule.service.ScheduleService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,26 +15,22 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/schedules") // API URL 기본 경로 설정
 public class ScheduleController {
-  private final Map<Long, Schedule> scheduleList = new HashMap<>();
+  private final ScheduleService scheduleService;
+
+  public ScheduleController(ScheduleService scheduleService) {
+    this.scheduleService = scheduleService;
+  }
 
   //일정 생성
-  @PostMapping
-  public ScheduleResponseDto createSchedule(@RequestBody ScheduleRequestDto requestDto) {
-    // ID 자동 증가 로직
-    Long scheduleId = scheduleList.isEmpty() ? 1 : Collections.max(scheduleList.keySet()) + 1;
-
-    // 요청 데이터로 Schedule 객체 생성
-    Schedule schedule = new Schedule(scheduleId, requestDto.getUserId(), requestDto.getTitle(), requestDto.getDate(), requestDto.getPassword());
-
-    // 실제 DB 저장 (현재는 메모리)
-    scheduleList.put(scheduleId, schedule);
-
-    return new ScheduleResponseDto(schedule);
+  @PostMapping // 일정 생성 요청
+  public ResponseEntity<ScheduleResponseDto> createSchedule(@RequestBody ScheduleRequestDto requestDto) {
+    // ServiceLayer 호출 및 응답
+    return new ResponseEntity<>(scheduleService.saveSchedule(requestDto), HttpStatus.CREATED);
   }
 
   // 일정 조회
   @GetMapping("/{id}")
-  public ScheduleResponseDto findMemoById(@PathVariable Long id) {
+  public ScheduleResponseDto findScheduleById(@PathVariable Long id) {
     Schedule schedule = scheduleList.get(id);
     if (schedule == null) {
       throw new IllegalArgumentException("해당 ID의 일정이 존재하지 않습니다.");
@@ -66,4 +64,11 @@ public class ScheduleController {
     schedule.update(requestDto); // 스케줄 업데이트
     return new ScheduleResponseDto(schedule); //DTO로 변환후 반환
 }
+  @DeleteMapping("/{id}")
+  public void deleteSchedule(@PathVariable Long id) {
+    if (!scheduleList.containsKey(id)) {
+      throw new IllegalArgumentException("해당 ID의 일정이 존재하지 않습니다.");
+    }
+    scheduleList.remove(id);
+  }
 }
