@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 public class Schedule {
-  @Setter
+
   private Long id; //일정 고유 ID
   private Long userId; // 작성자 ID
   private String title; // 할 일

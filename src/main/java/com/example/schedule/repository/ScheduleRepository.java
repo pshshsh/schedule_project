@@ -4,10 +4,13 @@ import com.example.schedule.dto.ScheduleResponseDto;
 import com.example.schedule.entity.Schedule;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ScheduleRepository {
-  Schedule saveSchedule(Schedule schedule);
+  ScheduleResponseDto saveSchedule(Schedule schedule);
   List<ScheduleResponseDto> findAllSchedules();
-  Schedule findScheduleById(Long id);
-  void deleteSchedule(Long id);
+  Optional<Schedule>  findScheduleById(Long id);
+  int deleteSchedule(Long id);
+  int updateSchedule(Long id, String title, String password);
+
 }
