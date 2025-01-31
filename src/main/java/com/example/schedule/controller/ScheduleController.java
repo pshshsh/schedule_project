@@ -40,18 +40,20 @@ public class ScheduleController {
   }
   //일정 수정
   @PutMapping("/{id}")
-  public ScheduleResponseDto updateSchedule(
+  public ResponseEntity<ScheduleResponseDto> updateSchedule(
       @PathVariable Long id,
       @RequestBody ScheduleUpdateRequestDto requestDto) {
 
-    return new ResponseEntity<>( scheduleService.updateSchedule(id, requestDto.getTitle(), requestDto.getUserId()),
-        HttpStatus.OK);
-}
+    return new ResponseEntity<>(
+        scheduleService.updateSchedule(id, requestDto.getTitle(), requestDto.getUserId(), requestDto.getPassword()),
+        HttpStatus.OK
+    );
+
+
+  }
   @DeleteMapping("/{id}")
-  public void deleteSchedule(@PathVariable Long id) {
-    if (!scheduleList.containsKey(id)) {
-      throw new IllegalArgumentException("해당 ID의 일정이 존재하지 않습니다.");
-    }
-    scheduleList.remove(id);
+  public ResponseEntity<Void> deleteSchedule(@PathVariable Long id, @RequestParam String password){
+    scheduleService.deleteSchedule(id, password);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 }

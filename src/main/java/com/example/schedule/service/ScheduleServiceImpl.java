@@ -64,4 +64,18 @@ public class ScheduleServiceImpl implements ScheduleService{
 
     return new ScheduleResponseDto(schedule);
   }
+
+  @Override
+  public void deleteSchedule(Long id, String password) {
+    // 일정 조회
+    Schedule schedule = scheduleRepository.findScheduleById(id);
+// NPE 방지
+    if (schedule == null) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
+    }
+    if (!schedule.getPassword().equals(password)) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다.");
+    }
+    scheduleRepository.deleteSchedule(id);
+  }
 }
