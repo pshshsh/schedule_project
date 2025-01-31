@@ -31,9 +31,8 @@ public class ScheduleController {
   // 일정 조회
   @GetMapping("/{id}")
   public ResponseEntity<ScheduleResponseDto> findScheduleById(@PathVariable Long id) {
-    return ResponseEntity.ok(scheduleService.findScheduleById(id));
+    return new ResponseEntity<>(scheduleService.findScheduleById(id), HttpStatus.OK);
   }
-
   // 전체 일정 조회
   @GetMapping
   public List<ScheduleResponseDto> findAllSchedules() {
@@ -41,17 +40,12 @@ public class ScheduleController {
   }
   //일정 수정
   @PutMapping("/{id}")
-  public ScheduleResponseDto updateScheduleById(
+  public ScheduleResponseDto updateSchedule(
       @PathVariable Long id,
       @RequestBody ScheduleUpdateRequestDto requestDto) {
 
-    //  데이터 조회
-    Schedule schedule = scheduleList.get(id);
-    if (schedule == null) {
-      throw new IllegalArgumentException("해당 ID의 일정이 존재하지 않습니다.");
-    }
-    schedule.update(requestDto); // 스케줄 업데이트
-    return new ScheduleResponseDto(schedule); //DTO로 변환후 반환
+    return new ResponseEntity<>( scheduleService.updateSchedule(id, requestDto.getTitle(), requestDto.getUserId()),
+        HttpStatus.OK);
 }
   @DeleteMapping("/{id}")
   public void deleteSchedule(@PathVariable Long id) {

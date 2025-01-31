@@ -32,6 +32,7 @@ public class Schedule {
 
   // 수정 메서드
   public void update(String title, Long userId) {
+
     this.title = title;
     this.userId = userId;
     this.updatedAt = LocalDateTime.now();

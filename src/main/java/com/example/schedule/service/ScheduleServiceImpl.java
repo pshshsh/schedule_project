@@ -4,7 +4,9 @@ import com.example.schedule.dto.ScheduleRequestDto;
 import com.example.schedule.dto.ScheduleResponseDto;
 import com.example.schedule.entity.Schedule;
 import com.example.schedule.repository.ScheduleRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -32,5 +34,34 @@ public class ScheduleServiceImpl implements ScheduleService{
     List<ScheduleResponseDto> allSchedules = scheduleRepository.findAllSchedules();
 
     return allSchedules;
+  }
+
+  @Override
+  public ScheduleResponseDto findScheduleById(Long id) {
+    Schedule schedule = scheduleRepository.findScheduleById(id);
+    // NPE 방지
+    if (schedule == null) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
+    }
+
+    return new ScheduleResponseDto(schedule);
+  }
+
+  @Override
+  public ScheduleResponseDto updateSchedule(Long id, String title, Long userId, String password) {
+    // 일정 조회
+    Schedule schedule = scheduleRepository.findScheduleById(id);
+    // NPE 방지
+    if (schedule == null) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
+    }
+    // 필수값 검증
+    if (title == null || userId == null) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The title and content are required values.");
+    }
+    // Schedule 수정
+    schedule.update(title, userId);
+
+    return new ScheduleResponseDto(schedule);
   }
 }
