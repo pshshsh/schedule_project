@@ -1,11 +1,10 @@
 package com.example.schedule.repository;
 
+import com.example.schedule.dto.ScheduleResponseDto;
 import com.example.schedule.entity.Schedule;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class ScheduleRepositoryImpl implements ScheduleRepository {
@@ -18,5 +17,17 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     schedule.setId(scheduleId);
     scheduleList.put(scheduleId, schedule);
     return schedule;
+  }
+
+  @Override
+  public List<ScheduleResponseDto> findAllSchedules() {
+    // init List
+    List<ScheduleResponseDto> allSchedules = new ArrayList<>();
+    // HashMap<Schedule> -> List<ScheduleResponseDto>
+    for (Schedule schedule : scheduleList.values()) {
+      ScheduleResponseDto responseDto = new ScheduleResponseDto(schedule);
+      allSchedules.add(responseDto);
+    }
+    return allSchedules;
   }
 }

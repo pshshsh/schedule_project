@@ -30,25 +30,14 @@ public class ScheduleController {
 
   // 일정 조회
   @GetMapping("/{id}")
-  public ScheduleResponseDto findScheduleById(@PathVariable Long id) {
-    Schedule schedule = scheduleList.get(id);
-    if (schedule == null) {
-      throw new IllegalArgumentException("해당 ID의 일정이 존재하지 않습니다.");
-    }
-
-    return new ScheduleResponseDto(schedule);
+  public ResponseEntity<ScheduleResponseDto> findScheduleById(@PathVariable Long id) {
+    return ResponseEntity.ok(scheduleService.findScheduleById(id));
   }
 
-  // init List
+  // 전체 일정 조회
   @GetMapping
   public List<ScheduleResponseDto> findAllSchedules() {
-    List<ScheduleResponseDto> responseList = new ArrayList<>();
-    // HashMap<Memo> -> List<MemoResponseDto>
-    for (Schedule schedule : scheduleList.values()) {
-      ScheduleResponseDto responseDto = new ScheduleResponseDto(schedule);
-      responseList.add(responseDto);
-    }
-    return responseList;
+    return scheduleService. findAllSchedules();
   }
   //일정 수정
   @PutMapping("/{id}")
