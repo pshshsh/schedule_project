@@ -36,7 +36,7 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
     parameters.put("title", schedule.getTitle());
     parameters.put("password", schedule.getPassword());
     parameters.put("date", schedule.getDate());
-    parameters.put("created_at", LocalDateTime.now());
+
     // 저장 후 생성된 key값을 Number 타입으로 반환하는 메서드
     Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
     return new ScheduleResponseDto(
@@ -46,6 +46,15 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
         schedule.getDate(),
         LocalDateTime.now(),
         LocalDateTime.now());
+  }
+
+  @Override
+  public List<ScheduleResponseDto> findSchedulesByUserId(Long userId) {
+    return jdbcTemplate.query(
+        "SELECT * FROM schedule WHERE user_id = ?",
+        scheduleRowMapper(),
+        userId
+    );
   }
 
   @Override

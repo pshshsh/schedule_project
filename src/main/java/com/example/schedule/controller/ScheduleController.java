@@ -56,4 +56,8 @@ public class ScheduleController {
     scheduleService.deleteSchedule(id, password);
     return new ResponseEntity<>(HttpStatus.OK);
   }
+  @GetMapping(params = "user")
+  public List<ScheduleResponseDto> getSchedulesByUserId(@RequestParam("user") Long userId) {
+    return scheduleService.findSchedulesByUserId(userId);
+  }
 }

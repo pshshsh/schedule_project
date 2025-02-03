@@ -36,6 +36,11 @@ public class ScheduleServiceImpl implements ScheduleService {
   }
 
   @Override
+  public List<ScheduleResponseDto> findSchedulesByUserId(Long userId) {
+    return scheduleRepository.findSchedulesByUserId(userId);
+  }
+
+  @Override
   public ScheduleResponseDto findScheduleById(Long id) {
     Optional<Schedule> optionalSchedule = scheduleRepository.findScheduleById(id);
     // NPE 방지
