@@ -36,7 +36,7 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
     parameters.put("title", schedule.getTitle());
     parameters.put("password", schedule.getPassword());
     parameters.put("date", schedule.getDate());
-
+    parameters.put("created_at", LocalDateTime.now());
     // 저장 후 생성된 key값을 Number 타입으로 반환하는 메서드
     Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
     return new ScheduleResponseDto(
@@ -61,7 +61,7 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
   }
 
   @Override
-  public int deleteSchedule(Long id) {
+  public int deleteSchedule(Long id, String password) {
     return jdbcTemplate.update("DELETE FROM schedule WHERE id = ?", id);
   }
 
@@ -69,7 +69,7 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
   @Override
   public int updateSchedule(Long id, String title, String password) {
     return jdbcTemplate.update(
-        "UPDATE schedule SET title = ? WHERE id = ? AND password = ?",
+        "UPDATE schedule SET title = ?, updated_at = NOW() WHERE id = ? AND password = ?",
         title, id, password
     );
   }
@@ -85,6 +85,7 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
             rs.getTimestamp("date") != null ? rs.getTimestamp("date").toLocalDateTime() : null,
             rs.getTimestamp("created_at") != null ? rs.getTimestamp("created_at").toLocalDateTime() : null,
             rs.getTimestamp("updated_at") != null ? rs.getTimestamp("updated_at").toLocalDateTime() : null
+
         );
       }
     };
@@ -97,9 +98,12 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
       @Override
         public Schedule mapRow (ResultSet rs,int rowNum) throws SQLException {
           return new Schedule(
+              rs.getLong("id"),                        // ✅ ID 매핑 추가
               rs.getLong("user_id"),
               rs.getString("title"),
               rs.getTimestamp("date").toLocalDateTime(),
+              rs.getTimestamp("created_at") != null ? rs.getTimestamp("created_at").toLocalDateTime() : null,
+              rs.getTimestamp("updated_at") != null ? rs.getTimestamp("updated_at").toLocalDateTime() : null,
               rs.getString("password")
 
           );

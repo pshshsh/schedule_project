@@ -65,10 +65,11 @@ public class ScheduleServiceImpl implements ScheduleService {
     return new ScheduleResponseDto(optionalSchedule.get());
   }
 
+
   @Override
-  public void deleteSchedule(Long id) {
+  public void deleteSchedule(Long id, String password) {
 // memo 삭제
-    int deletedRow = scheduleRepository.deleteSchedule(id);
+    int deletedRow = scheduleRepository.deleteSchedule(id, password);
     // 삭제된 row가 0개 라면
     if (deletedRow == 0) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
