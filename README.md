@@ -1,4 +1,4 @@
-API 명세서
+1. API 명세서
 
 1) 일정 등록  
    Method : POST  
@@ -22,8 +22,8 @@ API 명세서
    상태 코드 : 200 정상 조회
 
 4) 일정 수정  
-   Method : PUT  
-   URL : /schedules/{id}  
+   Method : PUT   
+   URL : /schedules/{id}   
    Request : 요청 body  
    Response : 수정된 일정 정보  
    상태 코드 : 200 정상 수정
@@ -34,3 +34,15 @@ API 명세서
    Request : 요청 param (id)  
    Response : 없음  
    상태 코드 : 200 정상 삭제  
+
+2. 패키지 구성  
+controller: API 요청 처리
+
+dto: 데이터 전송 객체 관리
+
+entity: DB와 매핑되는 엔티티  
+
+repository: 데이터베이스 CRUD 처리  
+
+service: 비즈니스 로직 처리  
+

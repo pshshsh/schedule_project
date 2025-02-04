@@ -1,10 +1,8 @@
 package com.example.schedule.entity;
 
-import com.example.schedule.dto.ScheduleRequestDto;
-import com.example.schedule.dto.ScheduleUpdateRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
+
 
 import java.time.LocalDateTime;
 

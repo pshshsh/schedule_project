@@ -13,9 +13,9 @@ public class ScheduleResponseDto {
   private Long userId;
   private String title;
   private LocalDateTime date;
-  private LocalDateTime createdAt;
-  private LocalDateTime updatedAt;
-
+  private LocalDateTime createdAt; // 일정 생성 시간
+  private LocalDateTime updatedAt; // 일정 수정 시간
+ //클라이언트로 데이터를 반환하는 DTO
   public  ScheduleResponseDto(Schedule schedule){
     this.id = schedule.getId();
     this.userId = schedule.getUserId();
