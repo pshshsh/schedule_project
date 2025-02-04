@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/cd08a539-7445-4db6-bea1-5ee9a9aa4099) API 명세서
+ API 명세서
 
 1) 일정 등록  
    Method : POST  
@@ -36,6 +36,7 @@
    상태 코드 : 200 정상 삭제
 
    ERD :
+   
    ![Schedule ERD](https://github.com/user-attachments/assets/c4b265ab-4dca-4f98-9266-3e18fbc41ce7)
 
    
