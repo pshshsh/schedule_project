@@ -1,4 +1,4 @@
-1. API 명세서
+![image](https://github.com/user-attachments/assets/cd08a539-7445-4db6-bea1-5ee9a9aa4099) API 명세서
 
 1) 일정 등록  
    Method : POST  
@@ -33,12 +33,15 @@
    URL : /schedules/{id}  
    Request : 요청 param (id)  
    Response : 없음  
-   상태 코드 : 200 정상 삭제  
+   상태 코드 : 200 정상 삭제
 
-2. 패키지 구성  
-controller: API 요청 처리
+   ERD :![Schedule ERD](https://github.com/user-attachments/assets/c4b265ab-4dca-4f98-9266-3e18fbc41ce7)
 
-dto: 데이터 전송 객체 관리
+   
+패키지 구성  
+ controller: API 요청 처리
+
+ dto: 데이터 전송 객체 관리
 
 entity: DB와 매핑되는 엔티티  
 
