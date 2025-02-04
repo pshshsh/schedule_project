@@ -35,7 +35,8 @@
    Response : 없음  
    상태 코드 : 200 정상 삭제
 
-   ERD :![Schedule ERD](https://github.com/user-attachments/assets/c4b265ab-4dca-4f98-9266-3e18fbc41ce7)
+   ERD :
+   ![Schedule ERD](https://github.com/user-attachments/assets/c4b265ab-4dca-4f98-9266-3e18fbc41ce7)
 
    
 패키지 구성  
